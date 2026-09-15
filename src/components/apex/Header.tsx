@@ -1,38 +1,50 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Globe, Menu, X } from "lucide-react";
+import { useBooking } from "./BookingModal";
 
-const links = ["Courses", "Instructors", "Pricing", "Safety", "About Us", "Support"];
+export const navLinks = [
+  { label: "Home", to: "/" },
+  { label: "Courses", to: "/courses" },
+  { label: "Instructors", to: "/instructors" },
+  { label: "Pricing", to: "/pricing" },
+  { label: "Safety", to: "/safety" },
+  { label: "About Us", to: "/about" },
+  { label: "Support", to: "/support" },
+] as const;
 
 function Logo() {
   return (
-    <a href="#top" className="flex shrink-0 items-center gap-2">
+    <Link to="/" className="flex shrink-0 items-center gap-2">
       <svg viewBox="0 0 24 24" className="h-7 w-7 text-brand" aria-hidden="true">
         <path d="M4 20 12 3l8 17-8-5.2Z" fill="currentColor" />
       </svg>
       <span className="text-lg font-extrabold tracking-tight text-ink">
-        Apex<span className="text-ink-soft font-semibold">Drive</span>
+        Apex<span className="font-semibold text-ink-soft">Drive</span>
       </span>
-    </a>
+    </Link>
   );
 }
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { open: openBooking } = useBooking();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 lg:grid-cols-[auto_1fr_auto]">
         <Logo />
 
-        <nav className="hidden justify-center gap-7 lg:flex">
-          {links.map((l) => (
-            <a
-              key={l}
-              href="#courses"
+        <nav className="hidden justify-center gap-6 lg:flex">
+          {navLinks.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              activeProps={{ className: "text-ink" }}
               className="text-sm font-medium text-ink-soft transition-colors hover:text-ink"
             >
-              {l}
-            </a>
+              {l.label}
+            </Link>
           ))}
         </nav>
 
@@ -44,12 +56,13 @@ export function Header() {
             <Globe className="h-4 w-4" aria-hidden="true" />
             EN
           </button>
-          <a
-            href="#booking"
+          <button
+            type="button"
+            onClick={openBooking}
             className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-brand-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             Book a Lesson
-          </a>
+          </button>
           <button
             type="button"
             aria-label="Toggle menu"
@@ -63,15 +76,16 @@ export function Header() {
 
       {open && (
         <nav className="border-t border-border bg-background px-5 pb-5 pt-3 lg:hidden">
-          {links.map((l) => (
-            <a
-              key={l}
-              href="#courses"
+          {navLinks.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
               onClick={() => setOpen(false)}
+              activeProps={{ className: "text-ink" }}
               className="block py-2.5 text-sm font-medium text-ink-soft"
             >
-              {l}
-            </a>
+              {l.label}
+            </Link>
           ))}
         </nav>
       )}

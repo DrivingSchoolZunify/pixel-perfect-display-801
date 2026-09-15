@@ -74,7 +74,7 @@ function BookingDialog({ onClose }: { onClose: () => void }) {
               Step {Math.min(step + 1, 4)} of 4
             </p>
             <h2 className="mt-2 text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
-              {step === 4 ? "You're booked" : `Choose your ${steps[step].toLowerCase()}`}
+              {step === 4 ? "You're booked" : `Choose your ${(steps[step] ?? "").toLowerCase()}`}
             </h2>
           </div>
           <button

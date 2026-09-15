@@ -1,12 +1,53 @@
+import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 const columns = [
-  { title: "Courses", items: ["Apex Beginner", "Apex Intensive Pro", "Apex Defensive GT", "Refresher Lessons"] },
-  { title: "Training", items: ["Highway Mastery", "Night & Weather", "Manual Conversion", "Theory Prep"] },
-  { title: "Technology", items: ["SmartDrive OS", "Progress Tracking", "Dual-Control Fleet", "Route Library"] },
-  { title: "Company", items: ["About Us", "Instructors", "Careers", "Newsroom"] },
-  { title: "Support", items: ["Help Centre", "Pricing", "Contact Us", "Book a Lesson"] },
-];
+  {
+    title: "Courses",
+    items: [
+      { label: "Apex Beginner", to: "/courses" },
+      { label: "Intensive Crash Course", to: "/courses" },
+      { label: "Highway Mastery", to: "/courses" },
+      { label: "Refresher Sessions", to: "/courses" },
+    ],
+  },
+  {
+    title: "Training",
+    items: [
+      { label: "Theory & Permit Prep", to: "/courses" },
+      { label: "Night & Weather", to: "/safety" },
+      { label: "Manual Conversion", to: "/courses" },
+      { label: "Mock Tests", to: "/safety" },
+    ],
+  },
+  {
+    title: "Pricing",
+    items: [
+      { label: "Hourly Rates", to: "/pricing" },
+      { label: "Package Bundles", to: "/pricing" },
+      { label: "Pass Guarantee", to: "/pricing" },
+      { label: "Gift Lessons", to: "/pricing" },
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      { label: "About Us", to: "/about" },
+      { label: "Instructors", to: "/instructors" },
+      { label: "Safety", to: "/safety" },
+      { label: "Milestones", to: "/about" },
+    ],
+  },
+  {
+    title: "Support",
+    items: [
+      { label: "Help Centre", to: "/support" },
+      { label: "Contact Us", to: "/support" },
+      { label: "Locations", to: "/support" },
+      { label: "FAQ", to: "/support" },
+    ],
+  },
+] as const;
 
 const socials = [Facebook, Instagram, Linkedin, Youtube];
 
@@ -29,7 +70,7 @@ export function Footer() {
             {socials.map((Icon, i) => (
               <a
                 key={i}
-                href="#top"
+                href="https://example.com"
                 className="grid h-8 w-8 place-items-center rounded-full border border-border text-ink-soft transition-colors hover:text-ink"
                 aria-label="Social profile"
               >
@@ -50,10 +91,13 @@ export function Footer() {
               <p className="text-sm font-bold text-ink">{col.title}</p>
               <ul className="mt-4 space-y-2.5">
                 {col.items.map((item) => (
-                  <li key={item}>
-                    <a href="#courses" className="text-xs text-ink-soft transition-colors hover:text-ink">
-                      {item}
-                    </a>
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      className="text-xs text-ink-soft transition-colors hover:text-ink"
+                    >
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -67,9 +111,9 @@ export function Footer() {
           <p className="text-xs text-ink-soft">© 2026 ApexDrive Academy. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
             {["Privacy Policy", "Terms of Use", "Cookie Policy"].map((l) => (
-              <a key={l} href="#top" className="text-xs text-ink-soft transition-colors hover:text-ink">
+              <Link key={l} to="/support" className="text-xs text-ink-soft transition-colors hover:text-ink">
                 {l}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
