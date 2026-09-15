@@ -1,24 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/apex/Header";
+import { Hero } from "@/components/apex/Hero";
+import { MetricsBar } from "@/components/apex/MetricsBar";
+import { Ecosystem } from "@/components/apex/Ecosystem";
+import { Courses } from "@/components/apex/Courses";
+import { Impact } from "@/components/apex/Impact";
+import { Testimonials } from "@/components/apex/Testimonials";
+import { Newsletter } from "@/components/apex/Newsletter";
+import { Footer } from "@/components/apex/Footer";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "ApexDrive Academy — Premium Driving School";
+const description =
+  "Learn to drive with confidence at ApexDrive Academy: certified instructors, dual-control cars, and a 98% first-time pass rate.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <MetricsBar />
+        <Ecosystem />
+        <Courses />
+        <Impact />
+        <Testimonials />
+        <Newsletter />
+      </main>
+      <Footer />
     </div>
   );
 }
