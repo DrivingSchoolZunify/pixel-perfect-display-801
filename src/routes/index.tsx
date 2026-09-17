@@ -1,13 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/apex/Header";
 import { Hero } from "@/components/apex/Hero";
 import { MetricsBar } from "@/components/apex/MetricsBar";
-import { Ecosystem } from "@/components/apex/Ecosystem";
+import { PathToLicense } from "@/components/apex/PathToLicense";
 import { Courses } from "@/components/apex/Courses";
 import { Impact } from "@/components/apex/Impact";
 import { Testimonials } from "@/components/apex/Testimonials";
 import { Newsletter } from "@/components/apex/Newsletter";
-import { Footer } from "@/components/apex/Footer";
 
 const title = "ApexDrive Academy — Premium Driving School";
 const description =
@@ -20,8 +18,6 @@ export const Route = createFileRoute("/")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -29,18 +25,14 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main>
-        <Hero />
-        <MetricsBar />
-        <Ecosystem />
-        <Courses />
-        <Impact />
-        <Testimonials />
-        <Newsletter />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Hero />
+      <MetricsBar />
+      <PathToLicense />
+      <Courses />
+      <Impact />
+      <Testimonials />
+      <Newsletter />
+    </>
   );
 }

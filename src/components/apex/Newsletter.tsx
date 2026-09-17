@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import newsletterCar from "@/assets/newsletter-car.jpg";
 
 export function Newsletter() {
+  const [values, setValues] = useState({ name: "", email: "" });
   const [sent, setSent] = useState(false);
 
   return (
@@ -29,11 +31,17 @@ export function Newsletter() {
             onSubmit={(e) => {
               e.preventDefault();
               setSent(true);
+              setValues({ name: "", email: "" });
+              toast.success("You're subscribed", {
+                description: "Road-ready tips and course dates are on their way.",
+              });
             }}
           >
             <input
               type="text"
               required
+              value={values.name}
+              onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
               placeholder="Your Name"
               aria-label="Your name"
               className="min-w-0 flex-1 rounded-full border border-border bg-background px-5 py-3 text-sm text-ink outline-none placeholder:text-ink-soft focus:border-brand"
@@ -41,6 +49,8 @@ export function Newsletter() {
             <input
               type="email"
               required
+              value={values.email}
+              onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
               placeholder="Your Email"
               aria-label="Your email"
               className="min-w-0 flex-1 rounded-full border border-border bg-background px-5 py-3 text-sm text-ink outline-none placeholder:text-ink-soft focus:border-brand"

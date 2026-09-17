@@ -1,7 +1,11 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, Play } from "lucide-react";
 import heroCar from "@/assets/hero-car.jpg";
+import { useBooking } from "./BookingModal";
 
 export function Hero() {
+  const { open } = useBooking();
+
   return (
     <section id="top" className="relative overflow-hidden bg-surface">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-28 pt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-36 lg:pt-20">
@@ -16,19 +20,20 @@ export function Hero() {
             modern way to learn that keeps stress at zero and standards high.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#courses"
+            <Link
+              to="/courses"
               className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground shadow-sm transition-transform hover:-translate-y-0.5"
             >
               Explore Courses
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-            <a
-              href="#booking"
+            </Link>
+            <button
+              type="button"
+              onClick={open}
               className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-surface"
             >
               Book a Lesson
-            </a>
+            </button>
           </div>
           <button
             type="button"
