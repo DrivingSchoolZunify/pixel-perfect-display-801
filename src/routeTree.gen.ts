@@ -15,6 +15,7 @@ import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as InstructorsRouteImport } from './routes/instructors'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as SupportRouteImport } from './routes/support'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const SafetyRoute = SafetyRouteImport.update({
   path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/instructors': typeof InstructorsRoute
   '/pricing': typeof PricingRoute
   '/safety': typeof SafetyRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/instructors': typeof InstructorsRoute
   '/pricing': typeof PricingRoute
   '/safety': typeof SafetyRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,13 +79,27 @@ export interface FileRoutesById {
   '/instructors': typeof InstructorsRoute
   '/pricing': typeof PricingRoute
   '/safety': typeof SafetyRoute
+  '/support': typeof SupportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/courses' | '/instructors' | '/pricing' | '/safety'
+    | '/'
+    | '/about'
+    | '/courses'
+    | '/instructors'
+    | '/pricing'
+    | '/safety'
+    | '/support'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/courses' | '/instructors' | '/pricing' | '/safety'
+  to:
+    | '/'
+    | '/about'
+    | '/courses'
+    | '/instructors'
+    | '/pricing'
+    | '/safety'
+    | '/support'
   id:
     | '__root__'
     | '/'
@@ -86,6 +108,7 @@ export interface FileRouteTypes {
     | '/instructors'
     | '/pricing'
     | '/safety'
+    | '/support'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,6 +118,7 @@ export interface RootRouteChildren {
   InstructorsRoute: typeof InstructorsRoute
   PricingRoute: typeof PricingRoute
   SafetyRoute: typeof SafetyRoute
+  SupportRoute: typeof SupportRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -141,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -151,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   InstructorsRoute: InstructorsRoute,
   PricingRoute: PricingRoute,
   SafetyRoute: SafetyRoute,
+  SupportRoute: SupportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
