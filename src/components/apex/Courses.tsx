@@ -1,47 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import beginnerCar from "@/assets/course-beginner.jpg";
-import intensiveCar from "@/assets/course-intensive.jpg";
-import defensiveCar from "@/assets/course-defensive.jpg";
-
-const courses = [
-  {
-    name: "Apex Beginner",
-    tagline: "Calm. Simple. Confident.",
-    img: beginnerCar,
-    price: "$420",
-    specs: [
-      ["10 hrs", "Lesson Time"],
-      ["Automatic", "Transmission"],
-      ["Theory", "Included"],
-    ],
-    popular: false,
-  },
-  {
-    name: "Apex Intensive Pro",
-    tagline: "Fast-tracked. Test ready.",
-    img: intensiveCar,
-    price: "$890",
-    specs: [
-      ["24 hrs", "Lesson Time"],
-      ["Auto / Manual", "Transmission"],
-      ["Pass", "Guarantee"],
-    ],
-    popular: true,
-  },
-  {
-    name: "Apex Defensive GT",
-    tagline: "Advanced. Road-hardened.",
-    img: defensiveCar,
-    price: "$640",
-    specs: [
-      ["16 hrs", "Lesson Time"],
-      ["Manual", "Transmission"],
-      ["Skid & Night", "Training"],
-    ],
-    popular: false,
-  },
-];
+import { courses } from "./data";
 
 export function Courses() {
   return (
@@ -54,7 +14,7 @@ export function Courses() {
       </div>
 
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
-        {courses.map((c) => (
+        {courses.slice(0, 3).map((c) => (
           <article
             key={c.name}
             className={cn(
@@ -84,7 +44,11 @@ export function Courses() {
             />
 
             <div className="grid grid-cols-3 gap-2 border-t border-border pt-5 text-center">
-              {c.specs.map(([value, label]) => (
+              {[
+                [c.hours, "Lesson Time"],
+                [c.transmission, "Transmission"],
+                [c.extra, "Included"],
+              ].map(([value, label]) => (
                 <div key={label}>
                   <p className="text-sm font-bold text-ink">{value}</p>
                   <p className="mt-0.5 text-[11px] text-ink-soft">{label}</p>
@@ -97,8 +61,8 @@ export function Courses() {
                 {c.price}
                 <span className="ml-1 text-xs font-medium text-ink-soft">/ package</span>
               </p>
-              <a
-                href="#booking"
+              <Link
+                to="/courses"
                 className={cn(
                   "inline-flex items-center gap-1.5 text-sm font-semibold",
                   c.popular ? "text-brand" : "text-ink",
@@ -106,7 +70,7 @@ export function Courses() {
               >
                 Learn More
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </article>
         ))}
