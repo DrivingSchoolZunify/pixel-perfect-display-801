@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, Globe2, Leaf, Users, Zap } from "lucide-react";
 
 const stats = [
@@ -16,13 +17,13 @@ export function Impact() {
           <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">
             Driving Change for a Safer Tomorrow
           </h2>
-          <a
-            href="#booking"
+          <Link
+            to="/safety"
             className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground transition-transform hover:-translate-y-0.5"
           >
             Our Safety Pledge
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 gap-y-10 lg:grid-cols-4">
