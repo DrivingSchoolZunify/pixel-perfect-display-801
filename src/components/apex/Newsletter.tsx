@@ -7,6 +7,7 @@ import newsletterCar from "@/assets/newsletter-car.jpg";
 export function Newsletter() {
   const [values, setValues] = useState({ name: "", email: "" });
   const [sent, setSent] = useState(false);
+  const subscribe = useServerFn(subscribeNewsletter);
 
   return (
     <section id="booking" className="bg-brand-soft">
