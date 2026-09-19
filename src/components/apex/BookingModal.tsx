@@ -1,6 +1,9 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { Check, ChevronLeft, X } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { createBooking } from "@/lib/bookings.functions";
 import { courses, instructors } from "./data";
 
 type BookingContextValue = { open: () => void };
@@ -50,6 +53,27 @@ function BookingDialog({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const submitBooking = useServerFn(createBooking);
+
+  async function handleConfirm() {
+    if (!course || !instructor || !date || !time) return;
+    setSubmitting(true);
+    try {
+      const res = await submitBooking({
+        data: { course, instructor, date, time, name: name.trim(), email: email.trim(), phone: phone.trim() },
+      });
+      if (!res.ok) {
+        toast.error(res.error);
+        return;
+      }
+      setStep(4);
+    } catch {
+      toast.error("We couldn't save your booking. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   const days = useMemo(() => nextDays(8), []);
   const canContinue =
@@ -248,11 +272,14 @@ function BookingDialog({ onClose }: { onClose: () => void }) {
             </button>
             <button
               type="button"
-              onClick={() => setStep((s) => s + 1)}
-              disabled={!canContinue}
+              onClick={() => {
+                if (step === 3) void handleConfirm();
+                else setStep((s) => s + 1);
+              }}
+              disabled={!canContinue || submitting}
               className="rounded-full bg-brand px-7 py-3 text-sm font-semibold text-brand-foreground transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-40"
             >
-              {step === 3 ? "Confirm booking" : "Continue"}
+              {step === 3 ? (submitting ? "Booking…" : "Confirm booking") : "Continue"}
             </button>
           </div>
         )}

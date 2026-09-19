@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { subscribeNewsletter } from "@/lib/bookings.functions";
 import newsletterCar from "@/assets/newsletter-car.jpg";
 
 export function Newsletter() {
   const [values, setValues] = useState({ name: "", email: "" });
   const [sent, setSent] = useState(false);
+  const subscribe = useServerFn(subscribeNewsletter);
 
   return (
     <section id="booking" className="bg-brand-soft">
@@ -28,13 +31,19 @@ export function Newsletter() {
 
           <form
             className="mt-6 flex flex-col gap-3 sm:flex-row"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
+              const payload = { name: values.name.trim(), email: values.email.trim() };
               setSent(true);
               setValues({ name: "", email: "" });
               toast.success("You're subscribed", {
                 description: "Road-ready tips and course dates are on their way.",
               });
+              try {
+                await subscribe({ data: payload });
+              } catch {
+                // duplicates and transient failures stay silent for the visitor
+              }
             }}
           >
             <input
