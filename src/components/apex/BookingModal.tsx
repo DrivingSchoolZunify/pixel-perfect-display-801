@@ -272,11 +272,14 @@ function BookingDialog({ onClose }: { onClose: () => void }) {
             </button>
             <button
               type="button"
-              onClick={() => setStep((s) => s + 1)}
-              disabled={!canContinue}
+              onClick={() => {
+                if (step === 3) void handleConfirm();
+                else setStep((s) => s + 1);
+              }}
+              disabled={!canContinue || submitting}
               className="rounded-full bg-brand px-7 py-3 text-sm font-semibold text-brand-foreground transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-40"
             >
-              {step === 3 ? "Confirm booking" : "Continue"}
+              {step === 3 ? (submitting ? "Booking…" : "Confirm booking") : "Continue"}
             </button>
           </div>
         )}
