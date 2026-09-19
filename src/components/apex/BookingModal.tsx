@@ -53,6 +53,27 @@ function BookingDialog({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const submitBooking = useServerFn(createBooking);
+
+  async function handleConfirm() {
+    if (!course || !instructor || !date || !time) return;
+    setSubmitting(true);
+    try {
+      const res = await submitBooking({
+        data: { course, instructor, date, time, name: name.trim(), email: email.trim(), phone: phone.trim() },
+      });
+      if (!res.ok) {
+        toast.error(res.error);
+        return;
+      }
+      setStep(4);
+    } catch {
+      toast.error("We couldn't save your booking. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   const days = useMemo(() => nextDays(8), []);
   const canContinue =
