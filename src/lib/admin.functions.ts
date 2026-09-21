@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 export type Booking = {
-  id: number;
+  id: string;
   course: string;
   instructor: string;
   date: string;
@@ -14,7 +14,7 @@ export type Booking = {
   created_at: string;
 };
 
-export type Subscriber = { id: number; email: string; created_at: string };
+export type Subscriber = { id: string; email: string; created_at: string };
 
 export const adminLogin = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
@@ -72,7 +72,7 @@ export const adminData = createServerFn({ method: "GET" }).handler(
 export const updateBookingStatus = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
     z
-      .object({ id: z.number(), status: z.enum(["pending", "confirmed", "cancelled"]) })
+      .object({ id: z.union([z.string(), z.number()]), status: z.enum(["pending", "confirmed", "cancelled"]) })
       .parse(data),
   )
   .handler(async ({ data }) => {
