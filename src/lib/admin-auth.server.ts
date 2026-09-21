@@ -34,8 +34,8 @@ export function verifyCredentials(email: string, password: string) {
 
 export function issueSession(email: string) {
   const expires = Date.now() + MAX_AGE * 1000;
-  const payload = `${email.trim().toLowerCase()}.${expires}`;
-  const token = `${payload}.${sign(payload)}`;
+  const payload = `${email.trim().toLowerCase()}|${expires}`;
+  const token = `${payload}|${sign(payload)}`;
   setResponseHeader(
     "Set-Cookie",
     `${COOKIE}=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=${MAX_AGE}`,
@@ -61,7 +61,7 @@ export function getAdminEmail(): string | null {
   const parts = token.split("|");
   if (parts.length !== 3) return null;
   const [email, expires, signature] = parts as [string, string, string];
-  if (!safeEqual(signature, sign(`${email}.${expires}`))) return null;
+  if (!safeEqual(signature, sign(`${email}|${expires}`))) return null;
   if (Number(expires) < Date.now()) return null;
   return email;
 }
