@@ -2,17 +2,13 @@
 
 Implement exactly the screenshot and nothing else
 
-This project was built with [Lovable](https://lovable.dev).
+This project was built by Zunify Tech Inc 
 
-**Live app**: https://pixel-perfect-display-801.lovable.app
+## Build By Zunify
 
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/87a5792e-fdfa-4d8a-834a-df4e73109c4a).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Ship faster**: describe what you want to build and Zunify handles the code.
+- **Stay in sync**: every change made in Zunify is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Zunify, ready for your next prompt.
 
 ## Development
 
