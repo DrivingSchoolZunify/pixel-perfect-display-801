@@ -57,7 +57,8 @@ export function getAdminEmail(): string | null {
     .find((part) => part.startsWith(`${COOKIE}=`));
   if (!raw) return null;
   const token = decodeURIComponent(raw.slice(COOKIE.length + 1));
-  const parts = token.split(".");
+  // Emails contain dots, so split from the right: <email>|<expires>|<signature>
+  const parts = token.split("|");
   if (parts.length !== 3) return null;
   const [email, expires, signature] = parts as [string, string, string];
   if (!safeEqual(signature, sign(`${email}.${expires}`))) return null;
